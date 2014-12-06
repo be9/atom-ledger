@@ -1,0 +1,167 @@
+'fileTypes': [
+  'ledger'
+]
+'foldingStartMarker': '^\\d{4}[/-]\\d{2}[/-]\\d{2}.*'
+'foldingStopMarker': '^\\s*$'
+'name': 'Ledger'
+'patterns': [
+  {
+    'captures':
+      '0':
+        'name': 'meta.function.transaction'
+      '1':
+        'name': 'string.other.date'
+      '3':
+        'name': 'string.other.date'
+      '5':
+        'name': 'markup.italic.desc'
+      '6':
+        'name': 'markup.underline.desc'
+    'comment': 'First line of a transaction: <date>[=<date>] [*!] [(<id>)] [<desc>]'
+    'match': '(?x:\n\t\t\t  ^(\\d{4}[/-]\\d\\d?[/-]\\d\\d?|\\d\\d?[/-]\\d\\d?)       # date\n\t\t\t\t (=(\\d{4}[/-]\\d\\d?[/-]\\d\\d?|\\d\\d?[/-]\\d\\d?))?   # optional effective date\n\t\t\t\t \\s+\n\t\t\t\t (\n\t\t\t\t  (\\*.*) |                                      # cleared\n\t\t\t\t\t(\\!.*) |                                      # pending\n\t\t\t\t\t(.*)                                          # uncleared\n\t\t\t   )\n\t\t\t)'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'string.regexp.expression'
+    'comment': 'Automated transaction'
+    'match': '^=\\s(.*)$'
+  }
+  {
+    'match': '(\\d{4}[/-]\\d\\d?[/-]\\d\\d?|\\d\\d?[/-]\\d\\d?)'
+    'name': 'string.other.date'
+  }
+  {
+    'match': '-?\\d+([,\\.]\\d+)*'
+    'name': 'constant.numeric.amount'
+  }
+  {
+    'match': '(?x:\n      [\\$\\£\\¥\\฿\\¢\\₡\\₢\\₣\\₤\\₥\\₦\\₧\\₨\\₩\\₪\\₫\\€\\₭\\₮\\₯\\¤\\₠\\₰\\₱]|\n      AED|AFN|ALL|AMD|ANG|AOA|ARS|AUD|AWG|AZN|BAM|BBD|BDT|BGN|BHD|BIF|BMD|BND|\n      BOB|BOV|BRL|BSD|BTN|BWP|BYR|BZD|CAD|CDF|CHE|CHF|CHW|CLF|CLP|CNY|COP|COU|\n      CRC|CUC|CUP|CVE|CZK|DJF|DKK|DOP|DZD|EGP|ERN|ETB|EUR|FJD|FKP|GBP|GEL|GHS|\n      GIP|GMD|GNF|GTQ|GYD|HKD|HNL|HRK|HTG|HUF|IDR|ILS|INR|IQD|IRR|ISK|JMD|JOD|\n      JPY|KES|KGS|KHR|KMF|KPW|KRW|KWD|KYD|KZT|LAK|LBP|LKR|LRD|LSL|LTL|LVL|LYD|\n      MAD|MDL|MGA|MKD|MMK|MNT|MOP|MRO|MUR|MVR|MWK|MXN|MXV|MYR|MZN|NAD|NGN|NIO|\n      NOK|NPR|NZD|OMR|PAB|PEN|PGK|PHP|PKR|PLN|PYG|QAR|RON|RSD|RUB|RWF|SAR|SBD|\n      SCR|SDG|SEK|SGD|SHP|SLL|SOS|SRD|SSP|STD|SVC|SYP|SZL|THB|TJS|TMT|TND|TOP|\n      TRY|TTD|TWD|TZS|UAH|UGX|USD|USN|USS|UYI|UYU|UZS|VEF|VND|VUV|WST|XAF|XAG|\n      XAU|XBA|XBB|XBC|XBD|XCD|XDR|XFU|XOF|XPD|XPF|XPT|XSU|XTS|XUA|XXX|YER|ZAR|\n      ZMK|ZWL\n    )'
+    'name': 'constant.other.currency'
+  }
+  {
+    'comment': 'Keywords that can appear anywhere'
+    'match': '(?x:\n       \\b([Ee]very|[Dd]ays?|[Ww]eeks?|[Mm]onths?|[Qq]uarters?|[Yy]ears?|\n          [Dd]aily|[Ww]eekly|[Bb]iweekly|[Mm]onthly|[Qq]uarterly|[Yy]early|\n          [Jj]an(uary)?|[Ff]eb(ruary)?|[Mm]ar(ch)?|[Aa]pr(il)?|[Mm]ay|[Jj]une?|\n          [Jj]uly?|[Aa]ug(ust)?|[Ss]ep(tember)?|[Oo]ct(ober)?|[Nn]ov(ember)?|[Dd]ec(ember)?|\n          [Tt]his|[Nn]ext|[Ll]ast|[Ii]n|[Ff]rom|[Ss]ince|[Tt]o|[Uu]ntil)\\b\n     )'
+    'name': 'keyword.other'
+  }
+  {
+    'comment': 'Keywords that must be preceded by whitespace'
+    'match': '^\\s+\\b(default|format|nomarket)\\b'
+    'name': 'keyword.other'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'keyword.other'
+      '2':
+        'name': 'string.regexp.expression'
+    'comment': 'Keywords that must be preceded by whitespace and followed by an expression'
+    'match': '^\\s+(assert|check|eval|payee|value)\\s+(.*)'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'keyword.other'
+      '2':
+        'name': 'markup.italic.desc'
+    'comment': 'Keywords that must be preceded by whitespace and followed by a description'
+    'match': '^\\s+(note)\\s+(.*)$'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'keyword.other'
+      '2':
+        'name': 'variable.other'
+    'comment': 'Keywords that must be preceded by whitespace and followed by some identifier'
+    'match': '^\\s+(alias)\\s+(.*)'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'markup.italic.account'
+    'comment': 'Virtual posting'
+    'match': '^\\s+\\((([^\\s#%|\\*;()\\]\\[] ?)+)\\)'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'markup.italic.account'
+    'comment': 'Balancing virtual posting'
+    'match': '^\\s+\\[(([^\\s#%|\\*;()\\]\\[] ?)+)\\]'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'markup.bold.account'
+    'comment': 'Posting'
+    'match': '^\\s+(([^\\s#%|\\*;()\\]\\[] ?)+)'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'keyword.control'
+      '2':
+        'name': 'markup.italic.desc'
+    'comment': 'Beginning-of-line keywords followed by a description'
+    'match': '^([@!]?payee)\\s+(.*)'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'keyword'
+      '3':
+        'name': 'markup.bold.account'
+    'comment': 'Beginning-of-line keywords followed by an account'
+    'match': '^([@!]?(A|account|apply account|bucket))\\s+(([^\\s#%|\\*;()\\]\\[] ?)+)$'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'keyword'
+      '2':
+        'name': 'string.regexp.expression'
+    'comment': 'Beginning-of-line keywords followed by an expression'
+    'match': '^([@!]?check)\\s+(.*)'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'keyword'
+      '2':
+        'name': 'markup.bold.account'
+      '4':
+        'name': 'string.regexp.expression'
+    'comment': 'Beginning-of-line keywords followed by an account and an expression'
+    'match': '^([@!]?capture)\\s+(([^\\s#%|\\*;()\\]\\[] ?)+)\\s+(.*)'
+  }
+  {
+    'captures':
+      '1':
+        'name': 'keyword.other'
+      '3':
+        'name': 'variable.other'
+    'comment': 'Beginning-of-line keywords followed by some identifier'
+    'match': '^([@!]?(apply tag|tag|end apply tag|end tag|include))\\s(.*)'
+  }
+  {
+    'comment': 'Other beginning-of-line keywords'
+    'match': '^[@!]?(end (apply )?account|commodity|define|fixed|endfixed|year|pop|[PYNDCIiOobh]\\s+)'
+    'name': 'keyword.other'
+  }
+  {
+    'match': '\\;.*$'
+    'name': 'comment.line.semi-colon'
+  }
+  {
+    'comment': 'Beginning-of-line line comment'
+    'match': '^[#%|\\*].*$'
+    'name': 'comment.line.number-sign'
+  }
+  {
+    'begin': '^[@!]?(comment|test)'
+    'end': '^[@!]?end (comment|test)|\\z'
+    'name': 'comment.block'
+  }
+]
+'scopeName': 'source.ledger'

@@ -1,0 +1,7 @@
+'.source.ledger':
+  'Posting':
+    'prefix': 'p'
+    'body': '${1:Account}  ${2:0}'
+  'Transaction':
+    'prefix': 't'
+    'body': '${1:`date +%Y/%m/%d`} ${2:Description}\n    p$0\n'

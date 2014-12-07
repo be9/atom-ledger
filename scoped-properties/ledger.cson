@@ -4,3 +4,4 @@
     'decreaseIndentPattern': '^\\s+\\d'
     'foldEndPattern': '^(end apply|end comment|endfixed|end test)'
     'commentStart': '; '
+    'tabLength': 4

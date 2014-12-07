@@ -1,0 +1,18 @@
+@import "ui-variables";
+@import "variables";
+
+.transaction {
+    font-weight: bold;
+
+    .pending {
+        color: @red;
+    }
+
+    .cleared {
+        color: @magenta;
+    }
+}
+
+.constant.currency, .constant.amount {
+    color: @blue !important;
+}

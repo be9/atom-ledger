@@ -1,5 +1,6 @@
 'fileTypes': [
-  'ledger'
+  'ledger',
+  'ldg'
 ]
 'foldingStartMarker': '^\\d{4}[/-]\\d{2}[/-]\\d{2}.*'
 'foldingStopMarker': '^\\s*$'
@@ -14,11 +15,21 @@
       '3':
         'name': 'string.other.date'
       '5':
-        'name': 'markup.italic.desc'
+        'name': 'meta.cleared.desc'
       '6':
-        'name': 'markup.underline.desc'
+        'name': 'meta.pending.desc'
+      '7':
+        'name': 'meta.uncleared.desc'
     'comment': 'First line of a transaction: <date>[=<date>] [*!] [(<id>)] [<desc>]'
-    'match': '(?x:\n\t\t\t  ^(\\d{4}[/-]\\d\\d?[/-]\\d\\d?|\\d\\d?[/-]\\d\\d?)       # date\n\t\t\t\t (=(\\d{4}[/-]\\d\\d?[/-]\\d\\d?|\\d\\d?[/-]\\d\\d?))?   # optional effective date\n\t\t\t\t \\s+\n\t\t\t\t (\n\t\t\t\t  (\\*.*) |                                      # cleared\n\t\t\t\t\t(\\!.*) |                                      # pending\n\t\t\t\t\t(.*)                                          # uncleared\n\t\t\t   )\n\t\t\t)'
+    'match': """(?x:
+        ^(\\d{4}[/-]\\d\\d?[/-]\\d\\d?|\\d\\d?[/-]\\d\\d?)       # date
+         (=(\\d{4}[/-]\\d\\d?[/-]\\d\\d?|\\d\\d?[/-]\\d\\d?))?   # optional effective date
+         \\s+
+         (
+            (\\*.*) |                                      # cleared
+            (\\!.*) |                                      # pending
+            (.*)                                           # uncleared
+         ))"""
   }
   {
     'captures':
@@ -36,7 +47,7 @@
     'name': 'constant.numeric.amount'
   }
   {
-    'match': '(?x:\n      [\\$\\£\\¥\\฿\\¢\\₡\\₢\\₣\\₤\\₥\\₦\\₧\\₨\\₩\\₪\\₫\\€\\₭\\₮\\₯\\¤\\₠\\₰\\₱]|\n      AED|AFN|ALL|AMD|ANG|AOA|ARS|AUD|AWG|AZN|BAM|BBD|BDT|BGN|BHD|BIF|BMD|BND|\n      BOB|BOV|BRL|BSD|BTN|BWP|BYR|BZD|CAD|CDF|CHE|CHF|CHW|CLF|CLP|CNY|COP|COU|\n      CRC|CUC|CUP|CVE|CZK|DJF|DKK|DOP|DZD|EGP|ERN|ETB|EUR|FJD|FKP|GBP|GEL|GHS|\n      GIP|GMD|GNF|GTQ|GYD|HKD|HNL|HRK|HTG|HUF|IDR|ILS|INR|IQD|IRR|ISK|JMD|JOD|\n      JPY|KES|KGS|KHR|KMF|KPW|KRW|KWD|KYD|KZT|LAK|LBP|LKR|LRD|LSL|LTL|LVL|LYD|\n      MAD|MDL|MGA|MKD|MMK|MNT|MOP|MRO|MUR|MVR|MWK|MXN|MXV|MYR|MZN|NAD|NGN|NIO|\n      NOK|NPR|NZD|OMR|PAB|PEN|PGK|PHP|PKR|PLN|PYG|QAR|RON|RSD|RUB|RWF|SAR|SBD|\n      SCR|SDG|SEK|SGD|SHP|SLL|SOS|SRD|SSP|STD|SVC|SYP|SZL|THB|TJS|TMT|TND|TOP|\n      TRY|TTD|TWD|TZS|UAH|UGX|USD|USN|USS|UYI|UYU|UZS|VEF|VND|VUV|WST|XAF|XAG|\n      XAU|XBA|XBB|XBC|XBD|XCD|XDR|XFU|XOF|XPD|XPF|XPT|XSU|XTS|XUA|XXX|YER|ZAR|\n      ZMK|ZWL\n    )'
+    'match': '(?x:\n      [р\\$\\£\\¥\\฿\\¢\\₡\\₢\\₣\\₤\\₥\\₦\\₧\\₨\\₩\\₪\\₫\\€\\₭\\₮\\₯\\¤\\₠\\₰\\₱]|\n      AED|AFN|ALL|AMD|ANG|AOA|ARS|AUD|AWG|AZN|BAM|BBD|BDT|BGN|BHD|BIF|BMD|BND|\n      BOB|BOV|BRL|BSD|BTN|BWP|BYR|BZD|CAD|CDF|CHE|CHF|CHW|CLF|CLP|CNY|COP|COU|\n      CRC|CUC|CUP|CVE|CZK|DJF|DKK|DOP|DZD|EGP|ERN|ETB|EUR|FJD|FKP|GBP|GEL|GHS|\n      GIP|GMD|GNF|GTQ|GYD|HKD|HNL|HRK|HTG|HUF|IDR|ILS|INR|IQD|IRR|ISK|JMD|JOD|\n      JPY|KES|KGS|KHR|KMF|KPW|KRW|KWD|KYD|KZT|LAK|LBP|LKR|LRD|LSL|LTL|LVL|LYD|\n      MAD|MDL|MGA|MKD|MMK|MNT|MOP|MRO|MUR|MVR|MWK|MXN|MXV|MYR|MZN|NAD|NGN|NIO|\n      NOK|NPR|NZD|OMR|PAB|PEN|PGK|PHP|PKR|PLN|PYG|QAR|RON|RSD|RUB|RWF|SAR|SBD|\n      SCR|SDG|SEK|SGD|SHP|SLL|SOS|SRD|SSP|STD|SVC|SYP|SZL|THB|TJS|TMT|TND|TOP|\n      TRY|TTD|TWD|TZS|UAH|UGX|USD|USN|USS|UYI|UYU|UZS|VEF|VND|VUV|WST|XAF|XAG|\n      XAU|XBA|XBB|XBC|XBD|XCD|XDR|XFU|XOF|XPD|XPF|XPT|XSU|XTS|XUA|XXX|YER|ZAR|\n      ZMK|ZWL\n    )'
     'name': 'constant.other.currency'
   }
   {

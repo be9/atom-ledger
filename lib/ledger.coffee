@@ -11,16 +11,23 @@ module.exports =
     atom.packages.activatePackage("autocomplete-plus")
       .then (pkg) =>
         @autocomplete = pkg.mainModule
+        return unless @autocomplete?
 
-        LedgerProvider = require "./ledger-provider"
+        LedgerProvider = (require './ledger-provider').ProviderClass(@autocomplete.Provider, @autocomplete.Suggestion)
 
-        @editorSubscription = atom.workspaceView.eachEditorView (editorView) =>
-          @registerProvider(LedgerProvider, editorView)
+        @editorSubscription = atom.workspace.observeTextEditors (editor) =>
+          @registerProvider(LedgerProvider, editor)
 
-  registerProvider: (ProviderClass, editorView) ->
-    if editorView.editor.getGrammar().name == 'Ledger' and editorView.attached and not editorView.mini
-      provider = new ProviderClass editorView
-      @autocomplete.registerProviderForEditorView provider, editorView
+  registerProvider: (ProviderClass, editor) ->
+    return unless ProviderClass?
+    return unless editor?
+
+    editorView = atom.views.getView(editor)
+    return unless editorView?
+
+    if editor.getGrammar().name == 'Ledger' and not editorView.mini
+      provider = new ProviderClass editor
+      @autocomplete.registerProviderForEditor provider, editor
       @providers.push provider
 
   deactivate: ->

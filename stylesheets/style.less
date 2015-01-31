@@ -1,18 +1,22 @@
 @import "ui-variables";
 @import "variables";
 
-.transaction {
-    font-weight: bold;
+atom-text-editor::shadow {
 
-    .pending {
-        color: @red;
+    .transaction {
+        font-weight: bold;
+
+        .pending {
+            color: @red;
+        }
+
+        .cleared {
+            color: @magenta;
+        }
     }
 
-    .cleared {
-        color: @magenta;
+    .constant.currency, .constant.amount {
+        color: @blue !important;
     }
-}
 
-.constant.currency, .constant.amount {
-    color: @blue !important;
 }

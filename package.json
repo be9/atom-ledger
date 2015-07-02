@@ -1,6 +1,6 @@
 {
   "name": "ledger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Ledger support",
   "repository": "https://github.com/be9/atom-ledger",
   "license": "MIT",

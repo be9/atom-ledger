@@ -8,8 +8,7 @@
     "atom": ">= 1.0.0"
   },
   "dependencies": {
-    "underscore-plus": "1.x",
-    "autocomplete-plus": ">= 2.17.4"
+    "underscore-plus": "1.x"
   },
   "providedServices": {
     "autocomplete.provider": {

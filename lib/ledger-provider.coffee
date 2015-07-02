@@ -3,50 +3,47 @@ path = require 'path'
 fs = require 'fs'
 
 module.exports =
-ProviderClass: (Provider, Suggestion)  ->
-  class LedgerProvider extends Provider
-    wordRegex: /\S+/g
+  selector: '.source.ledger'
+  disableForSelector: '.source.ledger .comment'
+  filterSuggestions: true
 
-    buildSuggestions: ->
-      accounts = @getAccountNames(@editor.getText())
+  getSuggestions: ({editor, prefix, bufferPosition}) ->
+    accounts = @getAccountNames(editor)
+    prefix = @getPrefix(editor, bufferPosition)
+    prefix_low = prefix.toLowerCase()
 
-      selection = @editor.getSelection()
-      prefix = @prefixOfSelection selection
-      return unless prefix.length
+    filter = (acc, pref) ->
+      return acc.toLowerCase().indexOf(pref) >= 0
 
-      prefix_low = prefix.toLowerCase()
+    suggestions = ({text: a, replacementPrefix: prefix} for a in accounts when filter(a, prefix_low))
+    suggestions
 
-      filter = (acc, pref) ->
-        return acc.toLowerCase().indexOf(pref) >= 0
+  getPrefix: (editor, bufferPosition) ->
+    line = editor.getTextInRange([[bufferPosition.row, 0], bufferPosition])
+    line.trim()
 
-      suggestions = (new Suggestion(this, word: a, label: a, prefix: prefix) \
-                     for a in accounts when filter(a, prefix_low))
+  getAccountNames: (editor) ->
+    text = editor.getText()
+    accs = []
 
-      if suggestions.length > 0
-        suggestions
+    for line in text.split("\n")
+      if line.match(/^\s+\S/)
+        line = line.replace(/;.*$/, '')
+        tokens = line.split(/\s{2,}/)
+        a = tokens[1]
+        accs.push(a) if a
 
-    getAccountNames: (text) ->
-      accs = []
+    unless editor.ledgerCannedAccounts?
+      @loadCannedAccounts(editor)
 
-      for line in text.split("\n")
-        if line.match(/^\s+\S/)
-          line = line.replace(/;.*$/, '')
-          tokens = line.split(/\s{2,}/)
-          a = tokens[1]
+    _.union(_.uniq(accs), editor.ledgerCannedAccounts)
 
-          accs.push(a) if a
+  loadCannedAccounts: (editor) ->
+    editor.ledgerCannedAccounts = []
+    fn = path.dirname(editor.getPath()) + '/accounts.txt'
 
-      unless @canned_accounts?
-        @loadCannedAccounts()
-
-      _.union(_.uniq(accs), @canned_accounts)
-
-    loadCannedAccounts: ->
-      @canned_accounts = []
-      fn = path.dirname(@editor.getPath()) + '/accounts.txt'
-
-      try
-        data = fs.readFileSync(fn)
-        @canned_accounts = _.without(_.uniq(data.toString().split("\n")), '')
-      catch
-        return
+    try
+      data = fs.readFileSync(fn)
+      editor.ledgerCannedAccounts = _.without(_.uniq(data.toString().split("\n")), '')
+    catch
+      return

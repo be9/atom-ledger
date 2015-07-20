@@ -1,4 +1,4 @@
-## 1.0.1
+## 1.0.2
 * Disable filtering on autocomplete-plus side, autocompletion works better now.
 
 ## 1.0.0

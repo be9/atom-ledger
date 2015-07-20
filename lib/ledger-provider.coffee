@@ -5,7 +5,6 @@ fs = require 'fs'
 module.exports =
   selector: '.source.ledger'
   disableForSelector: '.source.ledger .comment'
-  filterSuggestions: true
 
   getSuggestions: ({editor, prefix, bufferPosition}) ->
     accounts = @getAccountNames(editor)

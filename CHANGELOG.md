@@ -1,3 +1,6 @@
+## 1.0.1
+* Disable filtering on autocomplete-plus side, autocompletion works better now.
+
 ## 1.0.0
 * Support new provider API in latest autocomplete-plus
 * Work on some deprecations

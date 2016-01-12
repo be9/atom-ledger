@@ -104,7 +104,7 @@
   {
     'captures':
       '1':
-        'name': 'markup.bold.account'
+        'name': 'markup.account'
     'comment': 'Posting'
     'match': '^\\s+(([^\\s#%|\\*;()\\]\\[] ?)+)'
   }
@@ -122,7 +122,7 @@
       '1':
         'name': 'keyword'
       '3':
-        'name': 'markup.bold.account'
+        'name': 'markup.account'
     'comment': 'Beginning-of-line keywords followed by an account'
     'match': '^([@!]?(A|account|apply account|bucket))\\s+(([^\\s#%|\\*;()\\]\\[] ?)+)$'
   }
@@ -140,7 +140,7 @@
       '1':
         'name': 'keyword'
       '2':
-        'name': 'markup.bold.account'
+        'name': 'markup.account'
       '4':
         'name': 'string.regexp.expression'
     'comment': 'Beginning-of-line keywords followed by an account and an expression'

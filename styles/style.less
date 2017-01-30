@@ -1,20 +1,20 @@
 @import "ui-variables";
 
-atom-text-editor::shadow {
+atom-text-editor {
 
-    .transaction {
+    .syntax--transaction {
         font-weight: bold;
 
-        .pending {
+        .syntax--pending {
             color: @text-color-error;
         }
 
-        .cleared {
+        .syntax--cleared {
             color: @text-color-success;
         }
     }
 
-    .constant.currency, .constant.amount {
+    .syntax--constant.syntax--currency, .syntax--constant.syntax--amount {
         color: @text-color-info !important;
     }
 
